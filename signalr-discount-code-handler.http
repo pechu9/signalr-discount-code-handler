@@ -1,0 +1,6 @@
+@signalr_discount_code_handler_HostAddress = http://localhost:5092
+
+GET {{signalr_discount_code_handler_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
