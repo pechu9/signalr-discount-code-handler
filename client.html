@@ -14,7 +14,7 @@
         };
 
         function connect(){
-            ws = new WebSocket('ws://localhost:5092/codes-hub');
+            ws = new WebSocket('wss://localhost:7240/codes-hub');
             ws.onopen = function() {
                 console.log('Connected');
                 ws.send('{\"protocol\": \"json\", \"version\": 1}');
