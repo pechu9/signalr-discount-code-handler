@@ -22,7 +22,11 @@ cd signalr-discount-code-handler
 
 2. **Run the application:**
 
-    Run the application. The application will start and be accessible at `http://localhost:5092`.
+    Run the application using "https" profile in your IDE or using .NET CLI:
+   ```
+   dotnet run --launch-profile "https" --project signalr-discount-code-handler
+   ```
+   The application will start and be accessible at `https://localhost:7240`.
 
 3. **Open the html file:**
 
@@ -34,7 +38,8 @@ cd signalr-discount-code-handler
 
 5. **Browse DB to observe generation and usage of discount codes:**
 
-    Use LiteDB Studio to open codes.db file located in the root folder. You can observe the generation and usage of discount codes in the database. Don't forget to Disconnect from the DB in LiteDB Studio before running some application action again.
+    Use LiteDB Studio (https://github.com/litedb-org/LiteDB.Studio/releases) to open codes.db file located in the root folder.
+    You can observe the generation and usage of discount codes in the database. Don't forget to Disconnect from the DB in LiteDB Studio before running some application action again.
 
     
     
