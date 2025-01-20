@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.SignalR;
 using signalr_discount_code_handler;
+using static signalr_discount_code_handler.CodesHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton<CodeService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
