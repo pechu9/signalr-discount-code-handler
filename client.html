@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Discount codes service</title>
+    <style>
+        #countInput {
+            width: 150px;
+        }
+    </style>
+    <script type="text/javascript">
+        var ws;
+        window.onload = function() {
+            connect();
+        };
+
+        function connect(){
+            ws = new WebSocket('ws://localhost:5092/codes-hub');
+            ws.onopen = function() {
+                console.log('Connected');
+                ws.send('{\"protocol\": \"json\", \"version\": 1}');
+            };
+            ws.onmessage = function(event) {
+                console.log('Message from server ', event.data);
+            };
+            ws.onerror = function(err) {
+                console.error('WebSocket error', err);
+            };
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+            };
+        }
+		
+		function generateCodes(){
+            var count = parseInt(document.getElementById('countInput').value, 10);
+			var length = document.getElementById('lengthSelect').value;
+			
+            if (isNaN(count) || count < 1 || count > 2000) {
+				alert('Please enter number of codes between 1 and 2000.');
+				return;
+			}
+
+			var message = {
+				arguments: [parseInt(count), parseInt(length)],
+				invocationId: "0",
+				target: "GenerateCodes",
+				type: 1
+			};
+
+            var string = JSON.stringify(message) + '';
+			ws.send(string);
+		}
+
+        function useCode(){
+            var code = document.getElementById('codeInput').value;
+			
+            if (code.length < 7 || code.length > 8) {
+				alert('Code length should be between 7 and 8 characters.');
+				return;
+			}
+
+			var message = {
+				arguments: [code],
+				invocationId: "0",
+				target: "UseCode",
+				type: 1
+			};
+
+            var string = JSON.stringify(message) + '';
+			ws.send(string);
+		}
+    </script>
+</head>
+<body>
+    <h1>Discount codes service</h1>
+    
+    <h2>Generate discount codes</h2>
+    <label for="countInput">Number of codes</label><br>
+	<input type="number" id="countInput" placeholder="Min=1, Max=2000" min="1" max="2000"><br><br>
+	
+    <label for="lengthSelect">Length of code</label><br>
+    <select id="lengthSelect">
+	    <option value="7">7</option>
+	    <option value="8">8</option>
+	</select><br><br>
+
+	<button onclick="generateCodes()">Generate code(s)</button><br><br>
+
+    <h2>Use discount code</h2>
+    <label for="codeInput">Discount code</label><br>
+	<input type="text" id="codeInput"><br><br>
+
+    <button onclick="useCode()">Use code</button><br><br>
+</body>
+</html>
